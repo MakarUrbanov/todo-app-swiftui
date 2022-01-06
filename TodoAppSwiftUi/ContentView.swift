@@ -1,14 +1,16 @@
 import SwiftUI
 
+//   - trailing_whitespace
 struct ContentView: View {
-    var body: some View {
-        Text("Hello, TODO!")
-            .padding()
-    }
+
+  var body: some View {
+    Text("Hello, TODO!")
+      .padding()
+  }
 }
 
 struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
+  static var previews: some View {
+    ContentView()
+  }
 }
