@@ -1,5 +1,5 @@
 import Foundation
 
-class Todos: User {
+class Todos {
   var todos: [Dictionary] = [[String: Any]]()
 }

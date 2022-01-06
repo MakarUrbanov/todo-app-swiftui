@@ -1,10 +1,5 @@
-//
-// Created by makar on 06.01.2022.
-//
-
 import Foundation
 
-class Settings: User {
+class Settings {
   var isDarkTheme: Bool = false
-
 }

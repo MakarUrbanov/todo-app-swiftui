@@ -17,10 +17,10 @@ func checkRegistration(username: String, password: String) -> RegistrationErrors
   }
 }
 
-class User {
-  private var isAuth: Bool = false
-  var username: String = ""
-  private var password: String = ""
+class User: ObservableObject {
+  @Published private(set) var isAuth: Bool = false
+  @Published var username: String = ""
+  @Published private var password: String = ""
 
   init() {
     let storageUsername = UserDefaults.standard.object(forKey: "username") as? String ?? ""
