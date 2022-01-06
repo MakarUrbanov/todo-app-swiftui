@@ -4,6 +4,7 @@ disabled_rules:
   - identifier_name
   - weak_delegate
   - trailing_comma
+  - trailing_whitespace
 opt_in_rules:
   - empty_count
   - force_unwrapping

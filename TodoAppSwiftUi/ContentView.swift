@@ -1,6 +1,5 @@
 import SwiftUI
 
-//   - trailing_whitespace
 struct ContentView: View {
 
   var body: some View {
