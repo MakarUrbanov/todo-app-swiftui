@@ -5,6 +5,7 @@ struct FieldsSignIn: View {
   @Binding var password: String
   @ObservedObject var user: User
   @Binding var isOpenSignUp: Bool
+  @State var errorMessage: String = ""
 
   var body: some View {
     VStack {
@@ -15,16 +16,22 @@ struct FieldsSignIn: View {
           .padding(.horizontal, 4)
           .foregroundColor(.white)
           .disableAutocorrection(true)
+          .onChange(of: username, perform: { _ in
+            errorMessage = ""
+          })
 
-        Divider().background(.white)
+        Divider().frame(height: 2).background(errorMessage.isEmpty ? .white : .red)
 
         CustomTextField(text: $password, label: Text("Password").foregroundColor(.white), isSecure: true)
           .padding(.horizontal, 4)
           .foregroundColor(.white)
           .padding(.top, 20)
           .disableAutocorrection(true)
+          .onChange(of: password, perform: { _ in
+            errorMessage = ""
+          })
 
-        Divider().background(.white)
+        Divider().frame(height: 2).background(errorMessage.isEmpty ? .white : .red)
 
       }.padding(.horizontal, 28)
         .frame(height: 250)
@@ -34,10 +41,11 @@ struct FieldsSignIn: View {
 
       .accentColor(.white)
 
+    Text(errorMessage).fontWeight(.light).foregroundColor(.red)
+
     Button(action: {
-      user.signIn(username: username, password: password) { isSuccess, errorMode in
-        print(isSuccess)
-        print(errorMode)
+      user.signIn(username: username, password: password) { _, errorMode in
+        errorMessage = errorMode.rawValue
       }
     }, label: {
       Text("Sign In")
@@ -68,7 +76,7 @@ struct SignIn: View {
       VStack {
         FieldsSignIn(username: $username, password: $password, user: user, isOpenSignUp: $isOpenSignUp)
           .sheet(isPresented: $isOpenSignUp, content: {
-            Text("Hello")
+            SignUp(user: user)
           })
       }.frame(maxWidth: .infinity, maxHeight: .infinity)
         .navigationBarTitle("Todo App", displayMode: .large)

@@ -58,16 +58,16 @@ class User: ObservableObject {
   }
 
   func signIn(username: String, password: String, completion: @escaping (Bool, SignInErrors) -> Void) {
-    let isPassMatch: Bool = password == self.password
-    let isUsernameMatch: Bool = username == self.username
+    let isPassMatch: Bool = password == self.password && !password.isEmpty
+    let isUsernameMatch: Bool = username == self.username && !username.isEmpty
 
-    if !isPassMatch || !isUsernameMatch {
-      completion(false, .doesNotMatch)
+    if isPassMatch && isUsernameMatch {
+      setUserDefaults(username: username, password: password, isAuth: true)
+      completion(true, .allowed)
       return
     }
 
-    setUserDefaults(username: username, password: password, isAuth: true)
-    completion(true, .allowed)
+    completion(false, .doesNotMatch)
   }
 
   func logOut() {
