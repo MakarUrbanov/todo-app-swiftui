@@ -41,7 +41,7 @@ struct FieldsSignIn: View {
 
       .accentColor(.white)
 
-    Text(errorMessage).fontWeight(.light).foregroundColor(.red)
+    Text(errorMessage + " ").fontWeight(.light).foregroundColor(.red)
 
     Button(action: {
       user.signIn(username: username, password: password) { _, errorMode in
@@ -50,11 +50,11 @@ struct FieldsSignIn: View {
     }, label: {
       Text("Sign In")
         .frame(width: 250, height: 50)
-        .background(.blue)
+        .background(errorMessage.isEmpty ? .blue : .gray)
         .cornerRadius(12)
         .foregroundColor(.white)
         .font(.system(size: 20, weight: .bold, design: .default))
-    }).padding(.top, 16)
+    }).padding(.top, 6).disabled(!errorMessage.isEmpty)
 
     HStack {
       Text("Don't have an account?").fontWeight(.thin)
