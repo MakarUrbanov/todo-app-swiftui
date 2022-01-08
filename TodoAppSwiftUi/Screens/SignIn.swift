@@ -74,7 +74,14 @@ struct FieldsSignIn: View {
       Text("Don't have an account?").fontWeight(.thin)
       Button(action: {
         isOpenSignUp = true
-      }, label: { Text("Sign up").foregroundColor(.blue).fontWeight(.thin) })
+      }, label: {
+        Text("Sign up").foregroundColor(.blue)
+          .fontWeight(.thin)
+          .padding(.horizontal, 5)
+          .padding(.vertical, 2)
+          .background(.white)
+          .cornerRadius(8)
+      })
     }.padding(.top, 10)
   }
 }
