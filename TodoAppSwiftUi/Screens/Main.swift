@@ -6,7 +6,12 @@ struct Main: View {
   init(user: User) {
     self.user = user
 
-    NavigationBarSettings(titleColor: .white, backgroundColor: .systemCyan, tintColor: .white, shadowColor: .clear)
+    NavigationBarSettings(
+      titleColor: .white,
+      backgroundColor: UIColor(hex: ColorsState.get(.darkBackground)),
+      tintColor: .white,
+      shadowColor: .clear
+    )
   }
 
   var body: some View {
@@ -19,6 +24,7 @@ struct Main: View {
           Text("Log out")
         })
       }.frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color(hex: ColorsState.get(.lightBackground)))
 
         .navigationBarTitle("My ToDo", displayMode: .inline)
     }
