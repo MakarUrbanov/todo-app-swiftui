@@ -90,6 +90,8 @@ struct SignIn: View {
     let navBarAppearance = UINavigationBar.appearance()
     navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
     navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+
+    NavigationBarSettings(titleColor: .white, backgroundColor: .clear, tintColor: .clear, shadowColor: .clear)
   }
 
   var body: some View {
