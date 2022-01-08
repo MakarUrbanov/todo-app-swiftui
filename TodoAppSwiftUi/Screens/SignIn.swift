@@ -6,30 +6,46 @@ struct FieldsSignIn: View {
   @ObservedObject var user: User
   @Binding var isOpenSignUp: Bool
   @State var errorMessage: String = ""
+  @FocusState var isFocusPasswordField: Bool
+
+  func signIn() {
+    user.signIn(username: username, password: password) { _, errorMode in
+      errorMessage = errorMode.rawValue
+    }
+  }
 
   var body: some View {
+
     VStack {
       VStack {
         Text("Sing In").fontWeight(.bold).font(.system(size: 35)).foregroundColor(.white)
 
+        // Username field
         CustomTextField(text: $username, label: Text("Username").foregroundColor(.white), isSecure: false)
           .padding(.horizontal, 4)
           .foregroundColor(.white)
           .disableAutocorrection(true)
+          .autocapitalization(.none)
           .onChange(of: username, perform: { _ in
             errorMessage = ""
-          })
+          }).onSubmit(of: .text) {
+            isFocusPasswordField = true
+          }
 
         Divider().frame(height: 2).background(errorMessage.isEmpty ? .white : .red)
 
+        // Password field
         CustomTextField(text: $password, label: Text("Password").foregroundColor(.white), isSecure: true)
           .padding(.horizontal, 4)
           .foregroundColor(.white)
           .padding(.top, 20)
           .disableAutocorrection(true)
+          .autocapitalization(.none)
           .onChange(of: password, perform: { _ in
             errorMessage = ""
-          })
+          }).onSubmit(of: .text) {
+            signIn()
+          }.focused($isFocusPasswordField)
 
         Divider().frame(height: 2).background(errorMessage.isEmpty ? .white : .red)
 
@@ -44,9 +60,7 @@ struct FieldsSignIn: View {
     Text(errorMessage + " ").fontWeight(.light).foregroundColor(.red)
 
     Button(action: {
-      user.signIn(username: username, password: password) { _, errorMode in
-        errorMessage = errorMode.rawValue
-      }
+      signIn()
     }, label: {
       Text("Sign In")
         .frame(width: 250, height: 50)
@@ -71,21 +85,38 @@ struct SignIn: View {
   @State var password: String = ""
   @State var isOpenSignUp: Bool = false
 
+  init(user: User) {
+    self.user = user
+    let navBarAppearance = UINavigationBar.appearance()
+    navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+    navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+  }
+
   var body: some View {
     NavigationView {
       VStack {
         FieldsSignIn(username: $username, password: $password, user: user, isOpenSignUp: $isOpenSignUp)
-          .sheet(isPresented: $isOpenSignUp, content: {
-            SignUp(user: user)
-          })
       }.frame(maxWidth: .infinity, maxHeight: .infinity)
-        .navigationBarTitle("Todo App", displayMode: .large)
-        .offset(y: -60)
+        .navigationBarTitle(Text("Todo App"), displayMode: .large)
         .onAppear {
           if !user.username.isEmpty {
             username = user.username
           }
-        }
+        }.background {
+          Image("back2")
+            .resizable()
+            .edgesIgnoringSafeArea(.all)
+        }.sheet(isPresented: $isOpenSignUp, content: {
+          ZStack {
+            SignUp(user: user, isOpenSignUp: $isOpenSignUp)
+          }.overlay(alignment: .top, content: {
+            RoundedRectangle(cornerRadius: 6)
+              .frame(width: 55, height: 5)
+              .foregroundColor(.white)
+              .padding(.top, 10)
+              .opacity(0.5)
+          })
+        })
     }
 
   }

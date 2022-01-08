@@ -5,6 +5,7 @@ struct ContentView: View {
 
   var body: some View {
     let isAuth = user.isAuth
+
     VStack {
       if isAuth {
         Main(user: user)

@@ -28,9 +28,9 @@ class User: ObservableObject {
   @Published private var password: String = ""
 
   init() {
-    let storageUsername = UserDefaults.standard.object(forKey: "username") as? String ?? ""
-    let storagePassword = UserDefaults.standard.object(forKey: "userPassword") as? String ?? ""
-    let storageIsAuth = UserDefaults.standard.object(forKey: "isAuth") as? Bool ?? false
+    let storageUsername = UserDefaults.standard.string(forKey: "username") ?? ""
+    let storagePassword = UserDefaults.standard.string(forKey: "password") ?? ""
+    let storageIsAuth = UserDefaults.standard.bool(forKey: "isAuth")
     username = storageUsername
     password = storagePassword
     isAuth = storageIsAuth
@@ -39,8 +39,10 @@ class User: ObservableObject {
   func setUserDefaults(username: String, password: String, isAuth: Bool) {
     UserDefaults.standard.set(username, forKey: "username")
     self.username = username
+
     UserDefaults.standard.set(password, forKey: "password")
     self.password = password
+
     UserDefaults.standard.set(isAuth, forKey: "isAuth")
     self.isAuth = isAuth
   }
