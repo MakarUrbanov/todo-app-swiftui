@@ -1,12 +1,17 @@
 import Foundation
 
-enum RegistrationErrors: String {
+enum SignInErrors: String {
+  case doesNotMatch = "Password or login does not match"
+  case allowed = ""
+}
+
+enum SignUpErrors: String {
   case shortPass = "Password is too short"
   case shortUsername = "Username is too short"
   case allowed = ""
 }
 
-func checkRegistration(username: String, password: String) -> RegistrationErrors {
+func checkRegistration(username: String, password: String) -> SignUpErrors {
   switch true {
   case username.count < 3:
     return .shortUsername
@@ -25,19 +30,47 @@ class User: ObservableObject {
   init() {
     let storageUsername = UserDefaults.standard.object(forKey: "username") as? String ?? ""
     let storagePassword = UserDefaults.standard.object(forKey: "userPassword") as? String ?? ""
+    let storageIsAuth = UserDefaults.standard.object(forKey: "isAuth") as? Bool ?? false
     username = storageUsername
     password = storagePassword
+    isAuth = storageIsAuth
   }
 
-  func register(username: String, password: String, completion: @escaping (Bool, RegistrationErrors) -> Void) {
-    let registrationStatus: RegistrationErrors = checkRegistration(username: username, password: password)
+  func setUserDefaults(username: String, password: String, isAuth: Bool) {
+    UserDefaults.standard.set(username, forKey: "username")
+    self.username = username
+    UserDefaults.standard.set(password, forKey: "password")
+    self.password = password
+    UserDefaults.standard.set(isAuth, forKey: "isAuth")
+    self.isAuth = isAuth
+  }
+
+  func signUp(username: String, password: String, completion: @escaping (Bool, SignUpErrors) -> Void) {
+    let registrationStatus: SignUpErrors = checkRegistration(username: username, password: password)
 
     if registrationStatus != .allowed {
       completion(false, registrationStatus)
       return
     }
 
-    self.username = username
-    self.password = password
+    setUserDefaults(username: username, password: password, isAuth: true)
+    completion(true, registrationStatus)
+  }
+
+  func signIn(username: String, password: String, completion: @escaping (Bool, SignInErrors) -> Void) {
+    let isPassMatch: Bool = password == self.password
+    let isUsernameMatch: Bool = username == self.username
+
+    if !isPassMatch || !isUsernameMatch {
+      completion(false, .doesNotMatch)
+      return
+    }
+
+    setUserDefaults(username: username, password: password, isAuth: true)
+    completion(true, .allowed)
+  }
+
+  func logOut() {
+    setUserDefaults(username: username, password: password, isAuth: false)
   }
 }

@@ -9,7 +9,7 @@ struct ContentView: View {
       if isAuth {
         Main(user: user)
       } else {
-        Registration(user: user)
+        SignIn(user: user)
       }
     }.animation(.spring(), value: isAuth)
   }
@@ -18,5 +18,6 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
   static var previews: some View {
     ContentView()
+      .preferredColorScheme(.light)
   }
 }

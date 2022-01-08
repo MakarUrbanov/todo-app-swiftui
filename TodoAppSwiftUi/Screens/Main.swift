@@ -5,5 +5,10 @@ struct Main: View {
 
   var body: some View {
     Text("TODOS HERE!")
+    Button(action: {
+      user.logOut()
+    }, label: {
+      Text("Log out")
+    })
   }
 }
