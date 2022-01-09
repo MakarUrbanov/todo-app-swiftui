@@ -7,6 +7,9 @@ struct FieldsSignIn: View {
   @Binding var isOpenSignUp: Bool
   @State var errorMessage: String = ""
   @FocusState var isFocusPasswordField: Bool
+  
+  let lightBackground = Color(hex: ColorsState.get(.lightBackground))
+  let darkBackground = Color(hex: ColorsState.get(.darkBackground))
 
   func signIn() {
     user.signIn(username: username, password: password) { _, errorMode in
@@ -51,7 +54,7 @@ struct FieldsSignIn: View {
 
       }.padding(.horizontal, 28)
         .frame(height: 250)
-        .background(.blue)
+        .background(lightBackground)
         .cornerRadius(12)
     }.padding(.horizontal, 20)
 
@@ -64,7 +67,7 @@ struct FieldsSignIn: View {
     }, label: {
       Text("Sign In")
         .frame(width: 250, height: 50)
-        .background(errorMessage.isEmpty ? .blue : .gray)
+        .background(errorMessage.isEmpty ? darkBackground : darkBackground.opacity(0.4))
         .cornerRadius(12)
         .foregroundColor(.white)
         .font(.system(size: 20, weight: .bold, design: .default))
@@ -75,7 +78,7 @@ struct FieldsSignIn: View {
       Button(action: {
         isOpenSignUp = true
       }, label: {
-        Text("Sign up").foregroundColor(.blue)
+        Text("Sign up").foregroundColor(darkBackground)
           .fontWeight(.thin)
           .padding(.horizontal, 5)
           .padding(.vertical, 2)
@@ -94,9 +97,6 @@ struct SignIn: View {
 
   init(user: User) {
     self.user = user
-    let navBarAppearance = UINavigationBar.appearance()
-    navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
-    navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
 
     NavigationBarSettings(titleColor: .white, backgroundColor: .clear, tintColor: .clear, shadowColor: .clear)
   }

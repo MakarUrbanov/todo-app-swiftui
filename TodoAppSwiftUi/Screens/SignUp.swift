@@ -14,6 +14,10 @@ struct SignUp: View {
   @State var errorMessage: String = ""
   @FocusState private var focusedField: FocusFields?
 
+  let lightBackground = Color(hex: ColorsState.get(.lightBackground))
+  let darkBackground = Color(hex: ColorsState.get(.darkBackground))
+
+
   func signUp() {
     user.signUp(username: username, password: password) { isSuccess, errorMode in
       errorMessage = errorMode.rawValue
@@ -67,7 +71,7 @@ struct SignUp: View {
 
         }.padding(.horizontal, 28)
           .frame(height: 250)
-          .background(.blue)
+          .background(lightBackground)
           .cornerRadius(12)
       }.padding(.horizontal, 20)
 
@@ -80,7 +84,7 @@ struct SignUp: View {
       }, label: {
         Text("Sign Up")
           .frame(width: 250, height: 50)
-          .background(errorMessage.isEmpty ? .blue : .gray)
+          .background(errorMessage.isEmpty ? darkBackground : darkBackground.opacity(0.4))
           .cornerRadius(12)
           .foregroundColor(.white)
           .font(.system(size: 20, weight: .bold, design: .default))
