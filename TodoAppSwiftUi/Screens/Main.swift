@@ -17,16 +17,18 @@ struct Main: View {
   var body: some View {
     NavigationView {
       VStack {
-        Text("TODOS HERE!")
-        Button(action: {
-          user.logOut()
-        }, label: {
-          Text("Log out")
-        })
-      }.frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color(hex: ColorsState.get(.lightBackground)))
 
-        .navigationBarTitle("My ToDo", displayMode: .inline)
+      }.frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(.white)
+
+        .navigationBarTitle("My ToDo", displayMode: .large)
+        .toolbar {
+          Button(action: {
+            user.logOut()
+          }, label: {
+            Image(systemName: "arrow.left.to.line")
+          })
+        }
     }
   }
 }
