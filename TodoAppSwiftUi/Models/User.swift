@@ -27,23 +27,27 @@ class User: ObservableObject {
   @Published var username: String = ""
   @Published private var password: String = ""
 
+  enum UserDefaultsKeys: String {
+    case username, password, isAuth
+  }
+
   init() {
-    let storageUsername = UserDefaults.standard.string(forKey: "username") ?? ""
-    let storagePassword = UserDefaults.standard.string(forKey: "password") ?? ""
-    let storageIsAuth = UserDefaults.standard.bool(forKey: "isAuth")
+    let storageUsername = UserDefaults.standard.string(forKey: UserDefaultsKeys.username.rawValue) ?? ""
+    let storagePassword = UserDefaults.standard.string(forKey: UserDefaultsKeys.password.rawValue) ?? ""
+    let storageIsAuth = UserDefaults.standard.bool(forKey: UserDefaultsKeys.isAuth.rawValue)
     username = storageUsername
     password = storagePassword
     isAuth = storageIsAuth
   }
 
   func setUserDefaults(username: String, password: String, isAuth: Bool) {
-    UserDefaults.standard.set(username, forKey: "username")
+    UserDefaults.standard.set(username, forKey: UserDefaultsKeys.username.rawValue)
     self.username = username
 
-    UserDefaults.standard.set(password, forKey: "password")
+    UserDefaults.standard.set(password, forKey: UserDefaultsKeys.password.rawValue)
     self.password = password
 
-    UserDefaults.standard.set(isAuth, forKey: "isAuth")
+    UserDefaults.standard.set(isAuth, forKey: UserDefaultsKeys.isAuth.rawValue)
     self.isAuth = isAuth
   }
 

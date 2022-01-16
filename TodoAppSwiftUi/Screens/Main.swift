@@ -17,6 +17,8 @@ struct Main: View {
   var body: some View {
     NavigationView {
       VStack {
+        
+        TodosList()
 
       }.frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(.white)
