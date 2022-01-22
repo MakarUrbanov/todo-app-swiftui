@@ -1,18 +1,19 @@
 import SwiftUI
 
 struct ContentView: View {
-  @ObservedObject var user: User = User()
+  @StateObject var user: User = User()
 
   var body: some View {
     let isAuth = user.isAuth
 
     VStack {
       if isAuth {
-        Main(user: user)
+        Main()
       } else {
-        SignIn(user: user)
+        SignIn()
       }
     }.animation(.spring(), value: isAuth)
+    .environmentObject(user)
   }
 }
 

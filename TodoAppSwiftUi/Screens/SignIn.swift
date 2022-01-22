@@ -7,7 +7,7 @@ struct FieldsSignIn: View {
   @Binding var isOpenSignUp: Bool
   @State var errorMessage: String = ""
   @FocusState var isFocusPasswordField: Bool
-  
+
   let lightBackground = Color(hex: ColorsState.get(.lightBackground))
   let darkBackground = Color(hex: ColorsState.get(.darkBackground))
 
@@ -90,14 +90,12 @@ struct FieldsSignIn: View {
 }
 
 struct SignIn: View {
-  @ObservedObject var user: User
+  @EnvironmentObject var user: User
   @State var username: String = ""
   @State var password: String = ""
   @State var isOpenSignUp: Bool = false
 
-  init(user: User) {
-    self.user = user
-
+  init() {
     NavigationBarSettings(titleColor: .white, backgroundColor: .clear, tintColor: .clear, shadowColor: .clear)
   }
 
@@ -117,7 +115,7 @@ struct SignIn: View {
             .edgesIgnoringSafeArea(.all)
         }.sheet(isPresented: $isOpenSignUp, content: {
           ZStack {
-            SignUp(user: user, isOpenSignUp: $isOpenSignUp)
+            SignUp(isOpenSignUp: $isOpenSignUp)
           }.overlay(alignment: .top, content: {
             RoundedRectangle(cornerRadius: 6)
               .frame(width: 55, height: 5)

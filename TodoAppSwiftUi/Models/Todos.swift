@@ -13,6 +13,7 @@ class Todos: ObservableObject {
       saveItemsUserDefaults()
     }
   }
+  @Published var isLoading: Bool = true
 
   enum UserDefaultsKeys: String {
     case todos
@@ -31,6 +32,7 @@ class Todos: ObservableObject {
   }
 
   private func setTodosFromUserDefaults() {
+    isLoading = true
     guard
       let data = try? UserDefaults.standard.data(forKey: UserDefaultsKeys.todos.rawValue),
       let encodedData = try? JSONDecoder().decode([Todo].self, from: data)
@@ -38,8 +40,9 @@ class Todos: ObservableObject {
       return
     }
 
-    todos = encodedData
+    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: { // api simulation
+      self.todos = encodedData
+      self.isLoading = false
+    })
   }
-
-
 }

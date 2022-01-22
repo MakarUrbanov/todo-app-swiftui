@@ -1,11 +1,9 @@
 import SwiftUI
 
 struct Main: View {
-  @ObservedObject var user: User
+  @EnvironmentObject var user: User
 
-  init(user: User) {
-    self.user = user
-
+  init() {
     NavigationBarSettings(
       titleColor: .white,
       backgroundColor: UIColor(hex: ColorsState.get(.darkBackground)),
@@ -17,11 +15,12 @@ struct Main: View {
   var body: some View {
     NavigationView {
       VStack {
-        
+
         TodosList()
 
       }.frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(.white)
+        .ignoresSafeArea(edges: .bottom)
 
         .navigationBarTitle("My ToDo", displayMode: .large)
         .toolbar {

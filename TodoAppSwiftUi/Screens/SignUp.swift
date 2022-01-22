@@ -7,7 +7,7 @@ struct SignUp: View {
     case password
   }
 
-  @ObservedObject var user: User
+  @EnvironmentObject var user: User
   @Binding var isOpenSignUp: Bool
   @State var username: String = ""
   @State var password: String = ""
