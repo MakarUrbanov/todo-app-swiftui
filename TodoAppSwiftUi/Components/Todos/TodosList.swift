@@ -38,7 +38,7 @@ struct TodosList: View {
         }).disabled(isDisabledButton)
           .animation(.easeInOut, value: isDisabledButton)
           .padding(.top, 10)
-      }.padding(.horizontal, 20)
+      }.padding(.horizontal)
 
       if todoModel.isLoading {
         ProgressView("Loading...").frame(maxWidth: .infinity, maxHeight: 200)
@@ -47,11 +47,13 @@ struct TodosList: View {
           ForEach(todoModel.todos) { todo in
             TodoItem(todo)
               .listRowSeparator(.hidden)
+              .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 8, trailing: 0))
           }
             .onDelete(perform: { index in
               todoModel.removeTodo(atOffsets: index)
             })
-        }.listStyle(.plain).padding(.top)
+        }.listStyle(.plain)
+          .padding(.top).padding(.horizontal)
       }
 
       Spacer()

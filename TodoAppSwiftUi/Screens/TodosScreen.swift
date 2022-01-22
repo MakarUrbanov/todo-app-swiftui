@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct Main: View {
+struct TodosScreen: View {
   @EnvironmentObject var user: User
 
   init() {
