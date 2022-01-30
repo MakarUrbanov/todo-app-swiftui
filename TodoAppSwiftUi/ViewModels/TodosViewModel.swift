@@ -42,7 +42,17 @@ class TodosViewModel: Todos {
       return
     }
 
-    super.todos[todoIndex].isCompleted = isComplete
+    var todo = todos[todoIndex]
+    todo.isCompleted = isComplete
+
+    if isComplete {
+      DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+        self.completedTodos.append(todo)
+        let todoIndexSet: IndexSet = [todoIndex]
+        self.removeTodo(atOffsets: todoIndexSet)
+      })
+    }
+
     newValue(isComplete)
   }
 

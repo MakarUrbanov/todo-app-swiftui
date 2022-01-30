@@ -26,6 +26,6 @@ struct CustomTextField: View {
           label
         })
       }
-    }
+    }.accentColor(.blue)
   }
 }

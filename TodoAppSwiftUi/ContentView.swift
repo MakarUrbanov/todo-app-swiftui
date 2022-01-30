@@ -20,7 +20,7 @@ struct ContentView: View {
               Text("TODOS")
             }
 
-          Text("Old todos")
+          CompletedTodos()
             .tabItem {
               Image(systemName: "folder")
               Text("COMPLETE")

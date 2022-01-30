@@ -12,7 +12,6 @@ struct TodosList: View {
 
   var body: some View {
     let isDisabledButton = newTodoName.count < 3
-
     VStack {
       VStack {
         TodoInputField(text: $newTodoName)
@@ -42,10 +41,15 @@ struct TodosList: View {
 
       if todoModel.isLoading {
         ProgressView("Loading...").frame(maxWidth: .infinity, maxHeight: 200)
+      } else if todoModel.todos.isEmpty {
+        Text("Add your first todo")
+          .fontWeight(.black)
+          .font(.system(size: 26))
+          .frame(maxHeight: 200)
       } else {
         List {
           ForEach(todoModel.todos) { todo in
-            TodoItem(todo)
+            TodoItem(todo: todo, todosViewModel: todoModel)
               .listRowSeparator(.hidden)
               .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 8, trailing: 0))
           }

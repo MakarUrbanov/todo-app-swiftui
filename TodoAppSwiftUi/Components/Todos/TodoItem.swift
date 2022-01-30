@@ -5,12 +5,13 @@ struct TodoItem: View {
   @State var todoName: String
   @State var isCompleted: Bool
 
-  let todosViewModel = TodosViewModel()
+  var todosViewModel: TodosViewModel
 
-  init(_ todo: Todo) {
+  init(todo: Todo, todosViewModel: TodosViewModel) {
     self.todo = todo
     _todoName = State(initialValue: todo.name)
     _isCompleted = State(initialValue: todo.isCompleted ?? false)
+    self.todosViewModel = todosViewModel
   }
 
   @State var isPresentedSuccessModal: Bool = false
