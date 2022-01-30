@@ -1,17 +1,36 @@
 import SwiftUI
 
 struct ContentView: View {
-  @ObservedObject var user: User = User()
+  @StateObject var user: User = User()
+
+  init() {
+    UITabBar.appearance().backgroundColor = UIColor(hex: ColorsState.Scheme.darkBackground.rawValue)
+    UITabBar.appearance().barTintColor = UIColor(.white)
+  }
 
   var body: some View {
     let isAuth = user.isAuth
+
     VStack {
       if isAuth {
-        Main(user: user)
+        TabView {
+          TodosScreen()
+            .tabItem {
+              Image(systemName: "checklist")
+              Text("TODOS")
+            }
+
+          CompletedTodos()
+            .tabItem {
+              Image(systemName: "folder")
+              Text("COMPLETE")
+            }
+        }.accentColor(.white)
       } else {
-        Registration(user: user)
+        SignIn()
       }
     }.animation(.spring(), value: isAuth)
+      .environmentObject(user)
   }
 }
 
