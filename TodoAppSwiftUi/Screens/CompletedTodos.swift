@@ -6,7 +6,7 @@ struct CompletedTodos: View {
   init() {
     NavigationBarSettings(
       titleColor: .white,
-      backgroundColor: UIColor(hex: ColorsState.get(.darkBackground)),
+      backgroundColor: ColorsState.getUIColor(.darkBackground),
       tintColor: .white,
       shadowColor: .clear
     )

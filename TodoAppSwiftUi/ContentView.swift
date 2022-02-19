@@ -4,7 +4,7 @@ struct ContentView: View {
   @StateObject var user: User = User()
 
   init() {
-    UITabBar.appearance().backgroundColor = UIColor(hex: ColorsState.Scheme.darkBackground.rawValue)
+    UITabBar.appearance().backgroundColor = ColorsState.getUIColor(.darkBackground)
     UITabBar.appearance().barTintColor = UIColor(.white)
   }
 

@@ -8,8 +8,8 @@ struct FieldsSignIn: View {
   @State var errorMessage: String = ""
   @FocusState var isFocusPasswordField: Bool
 
-  let lightBackground = Color(hex: ColorsState.get(.lightBackground))
-  let darkBackground = Color(hex: ColorsState.get(.darkBackground))
+  let lightBackground = ColorsState.getColor(.lightBackground)
+  let darkBackground = ColorsState.getColor(.darkBackground)
 
   func signIn() {
     user.signIn(username: username, password: password) { _, errorMode in
@@ -31,7 +31,8 @@ struct FieldsSignIn: View {
           .autocapitalization(.none)
           .onChange(of: username, perform: { _ in
             errorMessage = ""
-          }).onSubmit(of: .text) {
+          })
+          .onSubmit(of: .text) {
             isFocusPasswordField = true
           }
 
@@ -46,17 +47,21 @@ struct FieldsSignIn: View {
           .autocapitalization(.none)
           .onChange(of: password, perform: { _ in
             errorMessage = ""
-          }).onSubmit(of: .text) {
+          })
+          .onSubmit(of: .text) {
             signIn()
-          }.focused($isFocusPasswordField)
+          }
+          .focused($isFocusPasswordField)
 
         Divider().frame(height: 2).background(errorMessage.isEmpty ? .white : .red)
 
-      }.padding(.horizontal, 28)
+      }
+        .padding(.horizontal, 28)
         .frame(height: 250)
         .background(lightBackground)
         .cornerRadius(12)
-    }.padding(.horizontal, 20)
+    }
+      .padding(.horizontal, 20)
 
       .accentColor(.white)
 
@@ -71,7 +76,8 @@ struct FieldsSignIn: View {
         .cornerRadius(12)
         .foregroundColor(.white)
         .font(.system(size: 20, weight: .bold, design: .default))
-    }).padding(.top, 6).disabled(!errorMessage.isEmpty)
+    })
+      .padding(.top, 6).disabled(!errorMessage.isEmpty)
 
     HStack {
       Text("Don't have an account?").fontWeight(.thin)
@@ -85,7 +91,8 @@ struct FieldsSignIn: View {
           .background(.white)
           .cornerRadius(8)
       })
-    }.padding(.top, 10)
+    }
+      .padding(.top, 10)
   }
 }
 
@@ -103,26 +110,30 @@ struct SignIn: View {
     NavigationView {
       VStack {
         FieldsSignIn(username: $username, password: $password, user: user, isOpenSignUp: $isOpenSignUp)
-      }.frame(maxWidth: .infinity, maxHeight: .infinity)
+      }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .navigationBarTitle(Text("Todo App"), displayMode: .large)
         .onAppear {
           if !user.username.isEmpty {
             username = user.username
           }
-        }.background {
+        }
+        .background {
           Image("back2")
             .resizable()
             .edgesIgnoringSafeArea(.all)
-        }.sheet(isPresented: $isOpenSignUp, content: {
+        }
+        .sheet(isPresented: $isOpenSignUp, content: {
           ZStack {
             SignUp(isOpenSignUp: $isOpenSignUp)
-          }.overlay(alignment: .top, content: {
-            RoundedRectangle(cornerRadius: 6)
-              .frame(width: 55, height: 5)
-              .foregroundColor(.white)
-              .padding(.top, 10)
-              .opacity(0.5)
-          })
+          }
+            .overlay(alignment: .top, content: {
+              RoundedRectangle(cornerRadius: 6)
+                .frame(width: 55, height: 5)
+                .foregroundColor(.white)
+                .padding(.top, 10)
+                .opacity(0.5)
+            })
         })
     }
 

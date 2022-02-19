@@ -7,7 +7,7 @@ struct TodoInputField: View {
     HStack {
       CustomTextField(text: $text,
         label: Text("Text your todo")
-          .foregroundColor(Color(hex: ColorsState.Scheme.lightGray.rawValue))
+          .foregroundColor(ColorsState.getColor(.lightGray))
       )
         .padding(.horizontal)
         .frame(height: 40)

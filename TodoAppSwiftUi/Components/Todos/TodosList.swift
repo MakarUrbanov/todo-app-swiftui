@@ -32,12 +32,14 @@ struct TodosList: View {
             .foregroundColor(.white).font(Font.body.weight(.black))
             .frame(maxWidth: .infinity).frame(height: 60)
             .background(isDisabledButton
-              ? Color(hex: ColorsState.Scheme.lightBackground.rawValue).opacity(0.5).cornerRadius(8)
-              : Color(hex: ColorsState.Scheme.lightBackground.rawValue).cornerRadius(8))
-        }).disabled(isDisabledButton)
+              ? ColorsState.getColor(.lightBackground).opacity(0.5).cornerRadius(8)
+              : ColorsState.getColor(.lightBackground).cornerRadius(8))
+        })
+          .disabled(isDisabledButton)
           .animation(.easeInOut, value: isDisabledButton)
           .padding(.top, 10)
-      }.padding(.horizontal)
+      }
+        .padding(.horizontal)
 
       if todoModel.isLoading {
         ProgressView("Loading...").frame(maxWidth: .infinity, maxHeight: 200)
@@ -56,12 +58,14 @@ struct TodosList: View {
             .onDelete(perform: { index in
               todoModel.removeTodo(atOffsets: index)
             })
-        }.listStyle(.plain)
+        }
+          .listStyle(.plain)
           .padding(.top).padding(.horizontal)
       }
 
       Spacer()
-    }.frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+      .frame(maxWidth: .infinity, maxHeight: .infinity)
 
   }
 

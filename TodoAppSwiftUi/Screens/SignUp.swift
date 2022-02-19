@@ -14,8 +14,8 @@ struct SignUp: View {
   @State var errorMessage: String = ""
   @FocusState private var focusedField: FocusFields?
 
-  let lightBackground = Color(hex: ColorsState.get(.lightBackground))
-  let darkBackground = Color(hex: ColorsState.get(.darkBackground))
+  let lightBackground = ColorsState.getColor(.lightBackground)
+  let darkBackground = ColorsState.getColor(.darkBackground)
 
 
   func signUp() {
@@ -63,17 +63,21 @@ struct SignUp: View {
             .autocapitalization(.none)
             .onChange(of: password, perform: { _ in
               errorMessage = ""
-            }).onSubmit(of: .text) {
+            })
+            .onSubmit(of: .text) {
               signUp()
-            }.focused($focusedField, equals: .password)
+            }
+            .focused($focusedField, equals: .password)
 
           Divider().frame(height: 2).background(errorMessage.isEmpty ? .white : .red)
 
-        }.padding(.horizontal, 28)
+        }
+          .padding(.horizontal, 28)
           .frame(height: 250)
           .background(lightBackground)
           .cornerRadius(12)
-      }.padding(.horizontal, 20)
+      }
+        .padding(.horizontal, 20)
 
         .accentColor(.white)
 
@@ -88,14 +92,17 @@ struct SignUp: View {
           .cornerRadius(12)
           .foregroundColor(.white)
           .font(.system(size: 20, weight: .bold, design: .default))
-      }).padding(.top, 6).disabled(!errorMessage.isEmpty)
-    }.frame(maxWidth: .infinity, maxHeight: .infinity).background {
-      ZStack {
-        Image("back2")
-          .resizable()
-          .edgesIgnoringSafeArea(.all)
-          .opacity(0.8)
-      }.background(.white)
+      })
+        .padding(.top, 6).disabled(!errorMessage.isEmpty)
     }
+      .frame(maxWidth: .infinity, maxHeight: .infinity).background {
+        ZStack {
+          Image("back2")
+            .resizable()
+            .edgesIgnoringSafeArea(.all)
+            .opacity(0.8)
+        }
+          .background(.white)
+      }
   }
 }

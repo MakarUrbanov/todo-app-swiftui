@@ -7,7 +7,11 @@ struct ColorsState {
     case lightGray = "ededed"
   }
 
-  static func get(_ color: Scheme) -> String {
-    return color.rawValue
+  static func getColor(_ color: Scheme) -> Color {
+    return Color(hex: color.rawValue)
+  }
+
+  static func getUIColor(_ color: Scheme) -> UIColor {
+    return UIColor(hex: color.rawValue)
   }
 }

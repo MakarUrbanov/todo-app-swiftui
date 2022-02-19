@@ -30,7 +30,7 @@ struct TodoItem: View {
           .overlay {
             Circle()
               .frame(width: 20, height: 20)
-              .foregroundColor(isCompleted ? Color(hex: ColorsState.Scheme.lightBackground.rawValue) : .clear)
+              .foregroundColor(isCompleted ? ColorsState.getColor(.lightBackground) : .clear)
           }
           .animation(.easeInOut(duration: 0.2), value: isCompleted)
       }.onTapGesture(perform: {

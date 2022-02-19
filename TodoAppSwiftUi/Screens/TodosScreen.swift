@@ -6,7 +6,7 @@ struct TodosScreen: View {
   init() {
     NavigationBarSettings(
       titleColor: .white,
-      backgroundColor: UIColor(hex: ColorsState.get(.darkBackground)),
+      backgroundColor: ColorsState.getUIColor(.darkBackground),
       tintColor: .white,
       shadowColor: .clear
     )
@@ -18,7 +18,8 @@ struct TodosScreen: View {
 
         TodosList()
 
-      }.frame(maxWidth: .infinity, maxHeight: .infinity)
+      }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(.white)
         .ignoresSafeArea(edges: .bottom)
 
